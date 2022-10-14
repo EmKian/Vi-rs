@@ -204,7 +204,11 @@ impl Buffer {
     pub fn insert_char(&mut self, character: char) -> Result<()> {
         let line = self.contents.get_mut(self.cursor.y + self.offset).unwrap();
         line.insert_char(self.cursor.x, character);
-        self.move_right_forced(1)?;
+        if character == '\t' {
+            self.move_right(1)?;
+        } else {
+            self.move_right_forced(1)?;
+        }
         Ok(())
     }
 

@@ -101,6 +101,9 @@ impl Row {
         sum
     }
 
+    // pub fn next_word(&mut self, at: usize, string: String) -> usize {
+    // }
+
     pub fn insert_char(&mut self, at: usize, c: char) {
         if at == self.len() {
             self.raw.push(c);
@@ -132,6 +135,18 @@ impl Index<usize> for Row {
             .map(|x| x.1)
             .next()
             .unwrap()
+    }
+}
+
+/// Iterator over Vi-style words 
+struct ViWords<'a> {
+    pub iter: &'a str
+}
+
+impl<'a> Iterator for ViWords<'a> {
+    type Item = (usize, &'a str);
+    fn next(&mut self) -> Option<Self::Item> {
+        todo!()
     }
 }
 
