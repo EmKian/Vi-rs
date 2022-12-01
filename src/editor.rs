@@ -59,6 +59,11 @@ impl Editor {
         }
     }
 
+    pub fn process_command(&mut self, command: String) {
+        match command {
+            _ => (),
+        }
+    }
     pub fn process_keypress(&mut self, keypress: KeyEvent) -> Result<()> {
         let current_buffer = &mut self.buffers[self.buffer_index].1;
         let (_, mut rows) = size()?;
@@ -117,7 +122,6 @@ impl Editor {
                 }
                 event::KeyCode::Char(':') => {
                     self.last_line.get_command();
-                    // self.mode = OperationMode::Escape;
                 }
                 _ => (),
             },
@@ -156,6 +160,11 @@ impl From<Vec<String>> for Editor {
         for path in buffers {
             let file = read(&path).unwrap_or_default();
             let buffer = Buffer::new(&file);
+            vector.push((path, buffer));
+        }
+        if vector.is_empty() {
+            let buffer = Buffer::new(&Vec::new());
+            let path = String::new();
             vector.push((path, buffer));
         }
         Editor {
